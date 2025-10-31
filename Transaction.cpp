@@ -1,26 +1,48 @@
-//
-// Created by pablo on 10/30/25.
-//
-
 #include "Transaction.h"
 #include <sstream>
 
-Transaction::Transaction(const std::string &d, double i, const std::string &t,
-    const std::string &desc): data(d), import(i), type(t), description(desc) {
+Transaction::Transaction(const Date &d,const Amount &amt, TransactionType t,
+    const std::string &desc): date(d), amount(amt), type(t), description(desc) {
+    if (!isValid()) {
+        throw std::invalid_argument("La transazione non è valida");
+    }
 }
 
-std::string Transaction::getData() const {
-    return data;
+
+bool Transaction::isValid() const {
+    if (type == TransactionType::ENTRATA && amount.isNegative()) {
+        return false;
+    }
+    if (type == TransactionType::USCITA && amount.isPositive()) {
+        return false;
+    }
+    return !description.empty();
 }
 
-double Transaction::getImport() const {
-    return import;
+void Transaction::setDate(const Date &d) {
+    date = d;
+    if (!isValid()) {
+        throw std::invalid_argument("La data non è valida per la transazione");
+    }
 }
 
-std::string Transaction::getType() const {
-    return type;
+void Transaction::setAmount(const Amount &amt) {
+    amount = amt;
+    if (!isValid()) {
+        throw std::invalid_argument("L'importo non valido per il tipo di transazione");
+    }
 }
 
-std::string Transaction::getDescription() const {
-    return description;
+void Transaction::setType(TransactionType t) {
+    type = t;
+    if (!isValid()) {
+        throw std::invalid_argument("Il tipo di transazione non è valido per l'importo");
+    }
+}
+
+void Transaction::setDescription(const std::string &desc) {
+    if (desc.empty()) {
+        throw std::invalid_argument("La descrizione non può essere vuota");
+    }
+    description = desc;
 }
