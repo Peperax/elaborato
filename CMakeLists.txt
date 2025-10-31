@@ -3,7 +3,8 @@ project(elaborato)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(elaborato main.cpp
+set(SOURCE_FILES
+        main.cpp
         Transaction.cpp
         Transaction.h
         Date.cpp
@@ -13,3 +14,10 @@ add_executable(elaborato main.cpp
         TransactionType.cpp
         TransactionType.h
 )
+
+add_library(core ${SOURCE_FILES})
+
+add_executable(elaborato main.cpp)
+target_link_libraries(elaborato core)
+
+add_subdirectory(test)
