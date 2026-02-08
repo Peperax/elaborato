@@ -3,12 +3,16 @@
 
 #include <string>
 
+/**
+ * Rappresenta un importo finanziario.
+ */
+
 class Amount {
 private:
     double value;
 
 public:
-    Amount(double v = 0.0);
+    explicit Amount(double v = 0.0);
 
     bool isValid() const;
 
@@ -19,8 +23,7 @@ public:
     double getValue() const { return value; }
     void setValue(double v);
 
+    std::string toString() const;
 };
-
-
 
 #endif //AMOUNT_H
