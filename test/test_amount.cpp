@@ -27,10 +27,10 @@ TEST(AmountTest, ThrowsOnInvalidInput) {
 
 TEST(AmountTest, RollbackOnFailure) {
     Amount a(35.5);
-//Si Imposta un valore non valido
+    // Si Imposta un valore non valido
     try {
         a.setValue(std::numeric_limits<double>::infinity());
     } catch (...) {}
-//Il Valore deve essere del precedente
-    EXPECT_EQ(a.getValue(), 35.5);
+
+    EXPECT_EQ(a.getValue(), 35.5); // Il Valore deve essere del precedente
 }

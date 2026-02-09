@@ -3,6 +3,10 @@
 
 #include <string>
 
+/**
+ * Gestisce la data nel calendario.
+ */
+
 class Date {
 private:
     int day;
@@ -14,23 +18,18 @@ public:
 
     [[nodiscard]] bool isValid() const;
 
-    [[nodiscard]] int getDay() const {
-        return day;
-    }
-
-    [[nodiscard]] int getMonth() const {
-        return month;
-    }
-
-    [[nodiscard]] int getYear() const {
-        return year;
-    }
+    [[nodiscard]] int getDay() const { return day; }
+    [[nodiscard]] int getMonth() const { return month; }
+    [[nodiscard]] int getYear() const { return year; }
 
     void setDay(int d);
     void setMonth(int m);
     void setYear(int y);
+
+    bool operator<(const Date& other) const;
+
+    [[nodiscard]] std::string toString() const;
+    static Date fromString(const std::string& dateStr);
 };
-
-
 
 #endif //DATE_H

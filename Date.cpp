@@ -1,7 +1,9 @@
 #include "Date.h"
 #include <stdexcept>
+#include <sstream>
+#include <iomanip>
 
-Date::Date(int d, int m, int y) {
+Date::Date(int d, int m, int y): day(d), month(m), year(y) {
     if (!isValid()) {
         throw std::invalid_argument("La data non è valida");
     }
@@ -45,4 +47,33 @@ void Date::setYear(int y) {
         year = 2000;
         throw std::invalid_argument("L'anno non è valido");
     }
+}
+
+bool Date::operator<(const Date& other) const {
+    if (year != other.year)
+        return year < other.year;
+    if (month != other.month)
+        return month < other.month;
+    return day < other.day;
+}
+
+std::string Date::toString() const {
+    std::stringstream ss;
+    // Impostiamo con il formato GG/MM/AAAA (es: 01/05/2023)
+    ss << std::setfill('0') << std::setw(2) << day << "/"
+       << std::setfill('0') << std::setw(2) << month << "/"
+       << year;
+    return ss.str();
+}
+
+Date Date::fromString(const std::string &dateStr) {
+    int d, m, y;
+    char s1, s2;
+    std::stringstream ss(dateStr);
+
+    if (!(ss >> d >> s1 >> m >> s2 >> y) || s1 != '/' || s2 != '/') {
+        throw std::invalid_argument("Il formato della data non è valido. Usa GG/MM/AAAA");
+    }
+
+    return {d, m, y};
 }
