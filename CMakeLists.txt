@@ -13,6 +13,8 @@ set(SOURCE_FILES
         Amount.h
         TransactionType.cpp
         TransactionType.h
+        Register.cpp
+        Register.h
 )
 
 add_library(core ${SOURCE_FILES})
