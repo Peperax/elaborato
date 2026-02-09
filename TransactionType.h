@@ -3,6 +3,10 @@
 
 #include <string>
 
+/**
+ * Definisce la natura della transazione (Entrata o Uscita).
+ */
+
 enum class TransactionType {
 ENTRATA,
 USCITA
