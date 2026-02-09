@@ -6,6 +6,9 @@
 #include "TransactionType.h"
 #include "Amount.h"
 
+/**
+ * Rappresenta una singola operazione del registro finanziario.
+ */
 
 class Transaction {
 
@@ -18,7 +21,7 @@ private:
 public:
     Transaction(const Date& date, const Amount& amount, TransactionType type, const std::string& description);
 
-    bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
     [[nodiscard]] Date getData() const{ return date; };
     [[nodiscard]] Amount getImport() const{ return amount; }
@@ -29,8 +32,11 @@ public:
     void setAmount(const Amount& amt);
     void setType(TransactionType t);
     void setDescription(const std::string& desc);
+
+    [[nodiscard]] std::string toCSV() const;
+    static Transaction fromCSV(const std::string& csvLine);
+
+    bool operator<(const Transaction& other) const;
 };
-
-
 
 #endif //TRANSACTION_H

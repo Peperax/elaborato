@@ -8,12 +8,8 @@ Transaction::Transaction(const Date &d,const Amount &amt, TransactionType t,
     }
 }
 
-
 bool Transaction::isValid() const {
-    if (type == TransactionType::ENTRATA && amount.isNegative()) {
-        return false;
-    }
-    if (type == TransactionType::USCITA && amount.isPositive()) {
+    if (amount.isZero()) {
         return false;
     }
     return !description.empty();
@@ -45,4 +41,36 @@ void Transaction::setDescription(const std::string &desc) {
         throw std::invalid_argument("La descrizione non può essere vuota");
     }
     description = desc;
+}
+
+std::string Transaction::toCSV() const {
+    std::stringstream ss;
+    ss << date.toString() << ";"
+       << amount.getValue() << ";"
+       << typeToString(type) << ";"
+       << description;
+    return ss.str();
+}
+
+Transaction Transaction::fromCSV(const std::string &csvLine) {
+    std::stringstream ss(csvLine);
+    std::string dateStr, typeStr, description;
+    double amountValue;
+
+    std::getline(ss, dateStr, ';');
+    ss >> amountValue;
+    ss.ignore();
+    std::getline(ss, typeStr, ';');
+    std::getline(ss, description);
+
+    Date date = Date::fromString(dateStr);
+    Amount amount(amountValue);
+    TransactionType type = stringToType(typeStr);
+
+    return {date, amount, type, description};
+}
+
+bool Transaction::operator<(const Transaction& other) const {
+    // Chiama l'operatore < della classe Date
+    return date < other.date;
 }
