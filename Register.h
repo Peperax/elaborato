@@ -17,13 +17,14 @@ public:
     void addTransaction(const Transaction& t);
     void removeTransaction(int index);
 
-    double computeTotalBalance() const;
+    [[nodiscard]] double computeTotalBalance() const;
 
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
 
-    const std::vector<Transaction>& getTransactions() const { return transactions; }
+    [[nodiscard]] const std::vector<Transaction>& getTransactions() const { return transactions; }
 
+    [[nodiscard]] std::vector<Transaction> getTransactionsInDateRange(const Date& start, const Date& end) const;
 };
 
 

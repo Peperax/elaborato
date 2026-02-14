@@ -23,6 +23,8 @@ public:
     [[nodiscard]] double getValue() const { return static_cast<double>(cents) / 100.0; }
     void setValue(double v);
 
+    [[nodiscard]] long long getCents() const { return cents; }
+
     [[nodiscard]] std::string toString() const;
 
     [[nodiscard]] bool operator<(const Amount& other) const ;

@@ -39,7 +39,7 @@ int main() {
     std::cout << "\nLista Movimenti (Ordinata per data):" << std::endl;
     for (const auto& t : myRegister.getTransactions()) {
         std::string segno = (t.getType() == TransactionType::ENTRATA) ? "[+]" : "[-]";
-        std::cout << t.getData().toString() << " " << segno << " "
+        std::cout << t.getDate().toString() << " " << segno << " "
                   << t.getDescription() << ": " << t.getImport().getValue() << " Euro" << std::endl;
     }
 

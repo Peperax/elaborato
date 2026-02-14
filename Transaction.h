@@ -23,7 +23,7 @@ public:
 
     [[nodiscard]] bool isValid() const;
 
-    [[nodiscard]] Date getData() const{ return date; };
+    [[nodiscard]] Date getDate() const{ return date; };
     [[nodiscard]] Amount getImport() const{ return amount; }
     [[nodiscard]] TransactionType getType() const{ return type; };
     [[nodiscard]] std::string getDescription() const{ return description; };

@@ -23,7 +23,7 @@ TEST(TransactionTest, CSVSerialization) {
     // Verifica che i dati sono identici
     EXPECT_EQ(t1.getDescription(), t2.getDescription());
     EXPECT_DOUBLE_EQ(t1.getImport().getValue(), t2.getImport().getValue());
-    EXPECT_EQ(t1.getData().toString(), t2.getData().toString());
+    EXPECT_EQ(t1.getDate().toString(), t2.getDate().toString());
 }
 
 TEST(TransactionTest, Comparison) {
