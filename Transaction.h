@@ -36,7 +36,8 @@ public:
     [[nodiscard]] std::string toCSV() const;
     static Transaction fromCSV(const std::string& csvLine);
 
-    bool operator<(const Transaction& other) const;
+    [[nodiscard]] bool operator<(const Transaction& other) const;
+    [[nodiscard]] bool operator==(const Transaction& other) const;
 };
 
 #endif //TRANSACTION_H

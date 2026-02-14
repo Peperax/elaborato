@@ -16,28 +16,37 @@ bool Transaction::isValid() const {
 }
 
 void Transaction::setDate(const Date &d) {
+    const Date oldDate = date;
     date = d;
     if (!isValid()) {
+        date = oldDate;
         throw std::invalid_argument("La data non è valida per la transazione");
     }
 }
 
 void Transaction::setAmount(const Amount &amt) {
+    const Amount oldAmount = amt;
     amount = amt;
     if (!isValid()) {
+        amount = oldAmount;
         throw std::invalid_argument("L'importo non valido per il tipo di transazione");
     }
 }
 
-void Transaction::setType(TransactionType t) {
+void Transaction::setType(const TransactionType t) {
+    const TransactionType oldType = t;
     type = t;
     if (!isValid()) {
+        type = oldType;
         throw std::invalid_argument("Il tipo di transazione non è valido per l'importo");
     }
 }
 
 void Transaction::setDescription(const std::string &desc) {
-    if (desc.empty()) {
+    const std::string oldDesc = description;
+    description = desc;
+    if (!isValid()) {
+        description = oldDesc;
         throw std::invalid_argument("La descrizione non può essere vuota");
     }
     description = desc;
@@ -71,6 +80,12 @@ Transaction Transaction::fromCSV(const std::string &csvLine) {
 }
 
 bool Transaction::operator<(const Transaction& other) const {
-    // Chiama l'operatore < della classe Date
     return date < other.date;
+}
+
+bool Transaction::operator==(const Transaction& other) const {
+    return date == other.date &&
+           amount == other.amount &&
+           type == other.type &&
+           description == other.description;
 }
