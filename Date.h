@@ -26,7 +26,8 @@ public:
     void setMonth(int m);
     void setYear(int y);
 
-    bool operator<(const Date& other) const;
+    [[nodiscard]] bool operator<(const Date& other) const;
+    [[nodiscard]] bool operator==(const Date& other) const;
 
     [[nodiscard]] std::string toString() const;
     static Date fromString(const std::string& dateStr);

@@ -4,7 +4,7 @@
 
 TEST(DateTest, ValidDate) {
     EXPECT_NO_THROW(Date d(15, 6, 2023));
-    Date d(1, 1, 2024);
+    const Date d(1, 1, 2024);
     EXPECT_EQ(d.getDay(), 1);
     EXPECT_EQ(d.getMonth(), 1);
     EXPECT_EQ(d.getYear(), 2024);
@@ -31,16 +31,31 @@ TEST(DateTest, LeapYearLogic) {
 
 TEST(DateTest, SetterRollback) {
     Date d(10, 10, 2023);
-    // Si Imposta un giorno non valido
-    try {
-        d.setDay(40);
-    } catch (...) {}
-    EXPECT_EQ(d.getDay(), 10); // Il Valore deve essere del precedente
+    const Date original(10, 10, 2023);
+
+    EXPECT_THROW(d.setDay(40), std::invalid_argument); // Si Imposta un giorno non valido
+    EXPECT_TRUE(d == original); // Il Valore deve essere del precedente
 }
 
-TEST(DateTest, ComparisonOperator) {
-    Date d1(1, 1, 2023);
-    Date d2(1, 1, 2024);
-    EXPECT_TRUE(d1 < d2);
-    EXPECT_FALSE(d2 < d1);
+TEST(DateTest, Serialization) {
+    const Date original(5, 2, 2024);
+
+    // Verifichiamo l' inserimento dello zero
+    const std::string s = original.toString();
+    EXPECT_EQ(s, "05/02/2024");
+
+    // Verifichiamo che fromString ricostruisca l'oggetto identico
+    const Date reconstructed = Date::fromString(s);
+    EXPECT_TRUE(original == reconstructed);
+}
+
+TEST(DateTest, EqualityandComparison) {
+    const Date d1(15, 6, 2023);
+    const Date d2(15, 6, 2023);
+    const Date d3(16, 6, 2023);
+
+    EXPECT_TRUE(d1 == d2);
+    EXPECT_FALSE(d1 == d3);
+    EXPECT_TRUE(d1 < d3);
+    EXPECT_FALSE(d3 < d2);
 }

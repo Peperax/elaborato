@@ -24,6 +24,9 @@ public:
     void setValue(double v);
 
     [[nodiscard]] std::string toString() const;
+
+    [[nodiscard]] bool operator<(const Amount& other) const ;
+    [[nodiscard]] bool operator==(const Amount& other) const ;
 };
 
 #endif //AMOUNT_H

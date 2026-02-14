@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iomanip>
 
-Date::Date(int d, int m, int y): day(d), month(m), year(y) {
+Date::Date(const int d = 1, const int m = 1, const int y = 2026): day(d), month(m), year(y) {
     if (!isValid()) {
         throw std::invalid_argument("La data non è valida");
     }
@@ -14,7 +14,7 @@ bool Date::isValid() const {
     if (month < 1 || month > 12) return false;
     if (day < 1) return false;
 
-    int daysForMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    const int daysForMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int maxDays = daysForMonth[month - 1];
 
     if (month == 2 && (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))) {
@@ -23,8 +23,8 @@ bool Date::isValid() const {
     return day <= maxDays;
 }
 
-void Date::setDay(int d) {
-    int oldDay = day;
+void Date::setDay(const int d) {
+    const int oldDay = day;
     day = d;
     if (!isValid()) {
         day = oldDay;
@@ -32,8 +32,8 @@ void Date::setDay(int d) {
     }
 }
 
-void Date::setMonth(int m) {
-    int oldMonth = month;
+void Date::setMonth(const int m) {
+    const int oldMonth = month;
     month = m;
     if (!isValid()) {
         month = oldMonth;
@@ -41,10 +41,11 @@ void Date::setMonth(int m) {
     }
 }
 
-void Date::setYear(int y) {
+void Date::setYear(const int y) {
+    const int oldYear = year;
     year = y;
     if (!isValid()) {
-        year = 2000;
+        year = oldYear;
         throw std::invalid_argument("L'anno non è valido");
     }
 }
@@ -55,6 +56,10 @@ bool Date::operator<(const Date& other) const {
     if (month != other.month)
         return month < other.month;
     return day < other.day;
+}
+
+bool Date::operator==(const Date& other) const {
+    return day == other.day && month == other.month && year == other.year;
 }
 
 std::string Date::toString() const {

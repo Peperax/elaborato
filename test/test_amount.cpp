@@ -2,13 +2,13 @@
 #include "../Amount.h"
 
 TEST(AmountTest, ConstructorAndGet) {
-    Amount a(10.50);  //
+    const Amount a(10.50);  //
     EXPECT_DOUBLE_EQ(a.getValue(),10.50);
 
-    Amount b(10.555);
+    const Amount b(10.555);
     EXPECT_DOUBLE_EQ(b.getValue(), 10.56); // arrotondamento eccesso
 
-    Amount d(10.554);
+    const Amount d(10.554);
     EXPECT_DOUBLE_EQ(d.getValue(), 10.55); // arrotondamento per difetto
 }
 
@@ -36,21 +36,32 @@ TEST(AmountTest, ThrowsOnInvalidInput) {
 
 TEST(AmountTest, RollbackOnFailure) {
     Amount a(35.5);
-    // Si Imposta un valore non valido
-    try {
-        a.setValue(std::numeric_limits<double>::infinity());
-    } catch (...) {}
+    const Amount expected(35.5);
 
-    EXPECT_EQ(a.getValue(), 35.5); // Il Valore deve essere del precedente
+    EXPECT_THROW(a.setValue(std::numeric_limits<double>::infinity()), std::invalid_argument); // Si imposta un valore non valido
+    EXPECT_TRUE(a == expected); // Il Valore deve essere del precedente
 }
 
 TEST(AmountTest, ToStringFormatting) {
-    Amount a(10.55);
+    const Amount a(10.55);
     EXPECT_EQ(a.toString(), "10.55"); // decimale > 10
 
-    Amount c(10.05);
+    const Amount c(10.05);
     EXPECT_EQ(c.toString(), "10.05"); // decimale < 10
 
-    Amount d(5.0);
+    const Amount d(5.0);
     EXPECT_EQ(d.toString(), "5.00"); // cifra tonda
+}
+
+TEST(AmountTest, EqualityAndComparison) {
+    const Amount a(10.50);
+    const Amount b(10.50);
+    const Amount c(20.30);
+
+    EXPECT_TRUE(a == b);
+    EXPECT_FALSE(a == c);
+
+    EXPECT_TRUE(a < c);
+    EXPECT_FALSE(c < a);
+    EXPECT_FALSE(a < b);
 }
