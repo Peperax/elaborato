@@ -9,21 +9,21 @@
 
 class Amount {
 private:
-    double value;
+    long long cents;
 
 public:
     explicit Amount(double v = 0.0);
 
-    bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
-    bool isPositive() const { return value > 0; }
-    bool isNegative() const { return value < 0; }
-    bool isZero() const { return value == 0; }
+    [[nodiscard]] bool isPositive() const { return cents > 0; }
+    [[nodiscard]] bool isNegative() const { return cents < 0; }
+    [[nodiscard]] bool isZero() const { return cents == 0; }
 
-    double getValue() const { return value; }
+    [[nodiscard]] double getValue() const { return static_cast<double>(cents) / 100.0; }
     void setValue(double v);
 
-    std::string toString() const;
+    [[nodiscard]] std::string toString() const;
 };
 
 #endif //AMOUNT_H
