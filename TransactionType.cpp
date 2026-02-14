@@ -1,7 +1,7 @@
 #include "TransactionType.h"
 #include <stdexcept>
 
-std::string typeToString(TransactionType type) {
+std::string typeToString(const TransactionType type) {
     switch (type) {
         case TransactionType::ENTRATA: return "ENTRATA";
         case TransactionType::USCITA: return "USCITA";
