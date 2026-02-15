@@ -12,7 +12,12 @@ int main() {
     // Inizio, legge il file se esiste
     Register myRegister;
     const std::string filename = "registro_finanziario.csv";
-    myRegister.loadFromFile(filename);
+    try {
+        myRegister.loadFromFile(filename);
+    } catch (const std::exception& e) {
+        // Se il file non esiste, mostra un avviso ma non chiudiamo il programma
+        std::cout << "[!] Avviso: " << e.what() << ". Sarà creato un nuovo registro al primo salvataggio." << std::endl;
+    }
 
     int choice = -1;
     while (choice != 0) {
